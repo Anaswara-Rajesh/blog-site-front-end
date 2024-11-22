@@ -14,9 +14,11 @@ const NavLinks = ({ className }: NavLinksProps) => {
     const router = useRouter();
 
     const [isMounted, setIsMounted] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         setIsMounted(true);
+        setLoading(false);
     }, []);
 
     const handleSignOut = () => {
@@ -25,7 +27,7 @@ const NavLinks = ({ className }: NavLinksProps) => {
         router.push("/login");
     };
 
-    if (!isMounted) return null;
+    if (loading || !isMounted) return null;
 
     const links = [
         { href: "/", text: "Home" },
@@ -51,7 +53,7 @@ const NavLinks = ({ className }: NavLinksProps) => {
 
     return (
         <ul className={`${className} text-lg font-medium`}>
-            {links.map(
+            {links?.map(
                 (link) =>
                     (link.showWhenLoggedIn === undefined || link.showWhenLoggedIn === isLoggedIn) && (
                         <li key={link.href}>

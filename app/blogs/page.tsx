@@ -42,7 +42,7 @@ const BlogList = () => {
             <h1 className="text-3xl font-bold text-center mb-8">List of Blogs</h1>
 
             {blogs?.length === 0 ? (
-                <p>No blogs available....</p>
+                <p className="text-center pt-10">No blogs available....</p>
             ) : (
                 <>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
