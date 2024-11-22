@@ -18,7 +18,9 @@ cd blog-site-front-end
 
 Install the required dependencies:
 
-npm install / npm install --force
+npm install 
+or 
+npm install --force
 or
 yarn install
 or
