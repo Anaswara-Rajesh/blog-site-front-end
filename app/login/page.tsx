@@ -1,13 +1,26 @@
-"use client";
+"use client"
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+import { login } from "@/app/features/userSlice";
+import axios from "axios";
+import { useAuth } from "../components/context/AuthContext";
+import { ApiConstants, baseURL } from "../api/apiConstants";
 
 const Login = () => {
+    const { singin } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const dispatch = useDispatch();
+    const router = useRouter();
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError("");
 
         if (!email || !password) {
             setError("Please enter both email and password.");
@@ -15,9 +28,37 @@ const Login = () => {
         }
 
         try {
+            setLoading(true);
+            const apiUrl = `${baseURL}/${ApiConstants.AUTH_LOGIN}`;
+            const response = await axios.post(apiUrl, {
+                email,
+                password,
+            });
 
-        } catch (err) {
-            setError("Login failed. Please try again.");
+            const { token, username } = response.data;
+            singin();
+
+            localStorage.setItem("token", token);
+            localStorage.setItem("username", username);
+
+            dispatch(
+                login({
+                    email,
+                    username,
+                    token,
+                })
+            );
+
+            toast.success("Login successful!");
+
+            router.push("/");
+
+        } catch (err: any) {
+            console.error("Login error:", err);
+            setError(err.response?.data?.message || "Login failed. Please try again.");
+            toast.error("Login failed. Please try again.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -59,12 +100,13 @@ const Login = () => {
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 text-white font-medium py-3 rounded-lg hover:bg-blue-700 transition duration-300"
+                        className={`w-full bg-blue-600 text-white font-medium py-3 rounded-lg transition duration-300 ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-blue-700"
+                            }`}
+                        disabled={loading}
                     >
-                        Login
+                        {loading ? "Logging in..." : "Login"}
                     </button>
                 </form>
-
             </div>
         </div>
     );

@@ -1,6 +1,7 @@
-export interface BlogType {
-    id: string | number;
+export interface Blog {
+    _id: string | number;
     title: string;
     body: string;
-    author: string;
+    createdBy: string;
+    createdAt: string;
 }

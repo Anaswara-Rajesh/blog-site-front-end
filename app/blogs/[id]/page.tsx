@@ -1,43 +1,46 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
-import { BlogType } from "../../types/BlogType";
+import { useDispatch, useSelector } from "react-redux";
+import { setBlog } from "@/app/features/blogSlice";
+import { RootState } from "@/app/store";
+import { ApiConstants, baseURL } from "@/app/api/apiConstants";
 
 const BlogDetail = () => {
-    const [blog, setBlog] = useState<BlogType | null>(null);
     const { id } = useParams();
-    console.log(id, "id");
+    const dispatch = useDispatch();
+
+    const blog = useSelector((state: RootState) => state.blog.blog);
 
     useEffect(() => {
         const fetchBlogDetail = async () => {
-            if (id) {
-                const res = await axios.get(
-                    `https://jsonplaceholder.typicode.com/posts/${id}`
-                );
-                console.log(res, "res");
-
-                setBlog(res.data);
+            if (id && (!blog || blog._id !== id)) {
+                try {
+                    const res = await axios.get(`${baseURL}/${ApiConstants.BLOGS}/${id}`);
+                    dispatch(setBlog(res.data));
+                } catch (error) {
+                    console.error("Error fetching blog:", error);
+                }
             }
         };
         fetchBlogDetail();
-    }, [id]);
+    }, [id, blog, dispatch]);
 
-    if (!blog) return <p className="text-center text-lg">Loading...</p>;
+    if (!blog) {
+        return <p className="text-center text-lg">Loading...</p>;
+    }
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-4xl">
-
             <h1 className="text-4xl font-bold mb-6 text-gray-900">{blog.title}</h1>
-
             <div className="bg-white p-6 rounded-lg shadow-lg mb-8 border border-gray-200">
                 <p className="text-lg text-gray-700 leading-relaxed mb-4">{blog.body}</p>
             </div>
 
-
             <div className="flex items-center justify-between text-sm text-gray-500">
-                <p>Created by: {blog.author}</p>
-                <p>Published on: {new Date().toLocaleString()}</p>
+                <p>Created by: {blog?.createdBy}</p>
+                <p>Published on: {new Date(blog?.createdAt).toLocaleString()}</p>
             </div>
 
             <div className="mt-6">
