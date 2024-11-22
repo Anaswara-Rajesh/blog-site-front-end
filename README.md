@@ -1,23 +1,37 @@
-Blog Application Frontend
+# Blog Application Frontend
 
 This is a Next.js project that serves as the frontend for a blogging platform. It was bootstrapped with create-next-app.
-Getting Started
-Run the development server
 
-To get started with the project, first install the dependencies and then start the development server:
+Getting Started
+
+Clone the Repository
+
+Start by cloning the repository to your local machine:
+
+git clone https://github.com/Anaswara-Rajesh/blog-site-front-end.git
+
+Navigate to the project directory:
+
+cd blog-site-front-end
+
+Install Dependencies
+
+Install the required dependencies:
 
 npm install
-# or
+or
 yarn install
-# or
+or
 pnpm install
 
-Then, run the development server:
+Run the Development Server
+
+Start the development server:
 
 npm run dev
-# or
+or
 yarn dev
-# or
+or
 pnpm dev
 
 Open http://localhost:3000 in your browser to view the application.
