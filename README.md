@@ -4,17 +4,17 @@ This is a Next.js project that serves as the frontend for a blogging platform. I
 
 Getting Started
 
-Clone the Repository
+1) Clone the Repository
 
 Start by cloning the repository to your local machine:
 
 git clone https://github.com/Anaswara-Rajesh/blog-site-front-end.git
 
-Navigate to the project directory:
+2) Navigate to the project directory:
 
 cd blog-site-front-end
 
-Install Dependencies
+3) Install Dependencies
 
 Install the required dependencies:
 
@@ -24,7 +24,13 @@ yarn install
 or
 pnpm install
 
-Run the Development Server
+4) Environment Variables
+
+Create a .env.local file in the root of your project to set up environment variables:
+
+NEXT_PUBLIC_API_BASE_URL=http://localhost:5000/api
+
+5) Run the Development Server
 
 Start the development server:
 
@@ -34,7 +40,7 @@ yarn dev
 or
 pnpm dev
 
-Open http://localhost:3000 in your browser to view the application.
+6) Open http://localhost:3000 in your browser to view the application.
 
 
 Features:-
@@ -44,8 +50,4 @@ Features:-
     State management using Redux Toolkit.
     Built with modern web development tools like Next.js and Tailwind CSS.
 
-Environment Variables
 
-Create a .env.local file in the root of your project to set up environment variables:
-
-NEXT_PUBLIC_API_BASE_URL=http://localhost:5000/api
